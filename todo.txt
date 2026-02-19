@@ -1,0 +1,395 @@
+CRITICAL FIXES (Must Complete)
+mlflow ui --backend-store-uri file:D:\projects\home_default\mlruns --port 5000
+--------------------------------------------------------------------------------
+[ ] Fix data leakage in Model_training.ipynb
+    [x ] Remove 'InterestRate' from num_scaled list
+    [x ] Remove 'DTIRatio' from num_scaled list
+    [x ] Update all feature lists consistently
+    [x ] Re-run all models with clean features
+    [x ] Document new AUC scores for clean models
+
+[x ] Add missing import in eda-loan-default.ipynb
+    [x ] Add 'import numpy as np' before correlation cell (around line 115)
+
+[x] Add stratification to train-test split in Model_training.ipynb
+    [x] Add stratify=y parameter to train_test_split function
+
+[] Complete EDA notebook
+    [ ] Remove empty cells at the end
+    [ ] Add numerical correlation heatmap visualization
+    [ ] Add final "Key Findings" markdown section
+    [ ] Summarize main insights from analysis
+
+HIGH PRIORITY (Strongly Recommended)
+--------------------------------------------------------------------------------
+[ ] Restructure Model_training.ipynb with clear sections
+    [ ] Add Table of Contents cell at top
+    [ ] Create Section 1: Setup & Data Loading
+    [ ] Create Section 2: PRIMARY MODEL (Pre-Approval Features)
+    [ ] Create Section 3: APPENDIX - Leakage Impact Analysis
+    [ ] Create Section 4: Model Comparison & Selection
+    [ ] Add markdown cells explaining each section's purpose
+
+[ ] Add leakage impact analysis to Model_training.ipynb
+    [ ] Train secondary models with InterestRate + DTIRatio included
+    [ ] Create comparison table showing Clean vs Leaky AUC
+    [ ] Add feature importance showing InterestRate dominance
+    [ ] Add markdown explaining why this is analysis-only (not production)
+
+[ ] Improve model evaluation
+    [ ] Add ROC curve visualization (all 3 models on same plot)
+    [ ] Add Precision-Recall curve (given recall focus)
+    [ ] Add threshold analysis for optimal recall
+    [ ] Calculate metrics at multiple thresholds (0.3, 0.5, 0.7)
+
+[ ] Fix or delete Sanity_checks_loan_dataset.ipynb
+    [ ] Update to acknowledge leakage features found
+    [ ] OR delete if redundant with EDA notebook
+
+[ ] Delete Model_training.py
+    [ ] Remove redundant file (duplicate of notebook)
+    [ ] Has unprofessional Colab header
+
+MEDIUM PRIORITY (Good to Have)
+--------------------------------------------------------------------------------
+[ ] Rename notebooks with numbering
+    [ ] Rename to: 01_sanity_checks_loan_dataset.ipynb (or delete)
+    [ ] Rename to: 02_eda_loan_default.ipynb
+    [ ] Rename to: 03_model_training.ipynb
+
+[ ] Add business context sections
+    [ ] Add cost-benefit analysis cell
+    [ ] Calculate expected value at different thresholds
+    [ ] Add recommendation for deployment threshold
+
+[ ] Improve visualizations
+    [ ] Add titles to all plots
+    [ ] Use consistent color scheme across notebooks
+    [ ] Add value labels to bar charts
+    [ ] Make all plots presentation-ready
+
+[ ] Document model selection rationale
+    [ ] Explain why final model was chosen
+    [ ] Document trade-offs considered
+    [ ] Add production readiness assessment
+
+LOW PRIORITY (Nice Polishing)
+--------------------------------------------------------------------------------
+[ ] Clean up code style
+    [ ] Apply consistent spacing and formatting
+    [ ] Remove any commented-out code
+    [ ] Add brief comments for complex operations
+
+[ ] Add model interpretation
+    [ ] Add SHAP values for final model
+    [ ] Create feature importance plot
+    [ ] Add sample prediction explanation
+
+
+================================================================================
+PHASE 2: PROJECT STRUCTURE SETUP
+Duration: 1 day
+================================================================================
+
+[ ] Create proper folder structure
+    [ ] Create data/raw/ folder
+    [ ] Create data/processed/ folder
+    [ ] Create src/ folder with __init__.py
+    [ ] Create models/ folder
+    [ ] Create reports/figures/ folder
+    [ ] Create tests/ folder (optional)
+    [ ] Move notebooks to notebooks/ folder
+
+[ ] Create .gitignore file
+    [ ] Ignore data/raw/
+    [ ] Ignore data/processed/
+    [ ] Ignore *.csv files
+    [ ] Ignore models/*.pkl files
+    [ ] Ignore mlruns/ and mlflow.db
+    [ ] Ignore Python cache files
+    [ ] Ignore venv/ and .env
+
+[ ] Move data files
+    [ ] Move Loan_default.csv to data/raw/
+    [ ] Update notebook paths temporarily
+
+
+================================================================================
+PHASE 3: CONVERT NOTEBOOKS TO PYTHON MODULES
+Duration: 2-3 days
+================================================================================
+
+[ ] Create src/config.py
+    [ ] Define PROJECT_ROOT, DATA_DIR, MODEL_DIR paths
+    [ ] Define RAW_DATA and PROCESSED_DATA paths
+    [ ] Define model parameters (RANDOM_STATE, TEST_SIZE)
+    [ ] Define LEAKY_FEATURES list
+    [ ] Define feature lists (NUM_SCALED, NUM_UNSCALED, etc.)
+
+[ ] Create src/data_loader.py
+    [ ] Extract data loading logic from notebooks
+    [ ] Create load_raw_data() function
+    [ ] Add data validation checks
+    [ ] Add docstrings
+
+[ ] Create src/preprocessing.py
+    [ ] Extract preprocessing pipeline from notebook
+    [ ] Create get_preprocessor() function
+    [ ] Create get_preprocessor_tree() function
+    [ ] Create load_and_clean_data() function
+    [ ] Add comprehensive docstrings
+
+[ ] Create src/train.py
+    [ ] Extract model training code from notebook
+    [ ] Add command-line arguments with argparse
+    [ ] Support multiple model types (--model lightgbm/xgboost/logreg)
+    [ ] Integrate MLflow logging
+    [ ] Save trained model to models/ folder
+    [ ] Make executable from command line
+
+[ ] Create src/evaluate.py
+    [ ] Create load_model() function
+    [ ] Generate evaluation report with all metrics
+    [ ] Save plots to reports/figures/
+    [ ] Print formatted metrics table
+    [ ] Add docstrings
+
+
+================================================================================
+PHASE 4: GIT SETUP
+Duration: 1 hour
+================================================================================
+
+[ ] Initialize Git repository
+    [ ] Run: git init
+    [ ] Verify .gitignore is in place
+    [ ] Stage initial files: git add .
+
+[ ] Create initial commit
+    [ ] Commit structure: git commit -m "Initial project structure"
+    [ ] Verify notebooks are committed
+    [ ] Verify data files are NOT committed
+
+[ ] Create GitHub repository
+    [ ] Create new repo on GitHub
+    [ ] Copy remote URL
+    [ ] Add remote: git remote add origin <URL>
+    [ ] Push: git push -u origin main
+
+[ ] Write basic README.md
+    [ ] Add project title and description
+    [ ] Add setup instructions
+    [ ] Add basic usage guide
+    [ ] Commit and push
+
+
+================================================================================
+PHASE 5: DVC SETUP
+Duration: 1-2 days
+================================================================================
+
+[ ] Initialize DVC
+    [ ] Install: pip install dvc
+    [ ] Initialize: dvc init
+    [ ] Stage DVC files: git add .dvc .dvcignore
+    [ ] Commit: git commit -m "Initialize DVC"
+
+[ ] Track data with DVC
+    [ ] Run: dvc add data/raw/Loan_default.csv
+    [ ] Stage: git add data/raw/Loan_default.csv.dvc data/.gitignore
+    [ ] Commit: git commit -m "Track raw data with DVC"
+
+[ ] Create params.yaml
+    [ ] Define train parameters (test_size, random_state)
+    [ ] Define model hyperparameters
+    [ ] Define preprocessing parameters
+    [ ] Commit params.yaml
+
+[ ] Create dvc.yaml pipeline
+    [ ] Define 'preprocess' stage
+    [ ] Define 'train' stage
+    [ ] Define 'evaluate' stage
+    [ ] Specify dependencies and outputs for each stage
+    [ ] Commit dvc.yaml
+
+[ ] Test DVC pipeline
+    [ ] Run: dvc repro
+    [ ] Verify all stages execute successfully
+    [ ] Run: dvc dag (visualize pipeline)
+    [ ] Commit dvc.lock file
+
+[ ] Setup remote storage (optional)
+    [ ] Choose storage (S3, Google Drive, etc.)
+    [ ] Configure: dvc remote add -d myremote <URL>
+    [ ] Push data: dvc push
+
+
+================================================================================
+PHASE 6: DOCUMENTATION & README
+Duration: 1-2 days
+================================================================================
+
+[ ] Write comprehensive README.md
+    [ ] Add project title and badges
+    [ ] Write project overview section
+    [ ] Describe business problem
+    [ ] Document dataset details
+    [ ] List key insights from EDA
+    [ ] Explain modeling approach
+    [ ] Present results table
+    [ ] Add reproduction instructions
+    [ ] Document project structure
+    [ ] Link to notebooks
+    [ ] Add future improvements section
+    [ ] Add license information
+
+[ ] Add requirements.txt
+    [ ] Pin all package versions
+    [ ] Test in fresh environment
+    [ ] Commit requirements.txt
+
+[ ] Add docstrings to all functions
+    [ ] Document all src/ module functions
+    [ ] Use proper format (Google or NumPy style)
+    [ ] Include parameters and return values
+
+[ ] Create additional documentation (optional)
+    [ ] Add CONTRIBUTING.md
+    [ ] Add LICENSE file
+    [ ] Add architecture diagram
+
+
+================================================================================
+PHASE 7: TESTING & VALIDATION (Optional)
+Duration: 1 day
+================================================================================
+
+[ ] Create test files
+    [ ] Create tests/test_preprocessing.py
+    [ ] Create tests/test_data_loader.py
+    [ ] Create tests/test_train.py
+
+[ ] Write unit tests
+    [ ] Test data loading functions
+    [ ] Test preprocessing pipeline
+    [ ] Test model input shapes
+    [ ] Test feature engineering
+
+[ ] Setup CI/CD (optional)
+    [ ] Create .github/workflows/test.yml
+    [ ] Configure GitHub Actions
+    [ ] Add status badge to README
+
+
+================================================================================
+PHASE 8: ADVANCED FEATURES (Optional Showcase)
+Duration: 2-4 days - Choose 1-2
+================================================================================
+
+OPTION A: Model Deployment
+[ ] Create FastAPI endpoint
+    [ ] Create app.py with prediction endpoint
+    [ ] Add input validation
+    [ ] Test locally
+
+[ ] Docker containerization
+    [ ] Create Dockerfile
+    [ ] Create docker-compose.yml
+    [ ] Test container
+
+[ ] Deploy to cloud
+    [ ] Choose platform (Heroku/AWS/GCP)
+    [ ] Deploy application
+    [ ] Test live endpoint
+
+OPTION B: Interactive Dashboard
+[ ] Create Streamlit app
+    [ ] Build prediction interface
+    [ ] Add model performance visualization
+    [ ] Add feature importance explorer
+    [ ] Deploy to Streamlit Cloud
+
+OPTION C: Experiment Tracking
+[ ] Setup MLflow UI
+    [ ] Configure tracking server
+    [ ] Log all experiments
+    [ ] Create model registry
+    [ ] Add model comparison dashboard
+
+OPTION D: Advanced Analysis
+[ ] Add SHAP analysis
+    [ ] Calculate SHAP values
+    [ ] Create summary plots
+    [ ] Add force plots
+
+[ ] Add calibration analysis
+    [ ] Create calibration curves
+    [ ] Calculate calibration metrics
+
+[ ] Create threshold optimization tool
+    [ ] Build interactive threshold selector
+    [ ] Show metric trade-offs
+
+
+================================================================================
+QUICK START CHECKLIST
+================================================================================
+
+TODAY (2 hours):
+[ ] Fix data leakage in Model_training.ipynb
+[ ] Add stratification to train-test split
+[ ] Add missing numpy import to eda notebook
+
+TOMORROW (4 hours):
+[ ] Complete EDA notebook with findings
+[ ] Restructure Model_training.ipynb with sections
+[ ] Add leakage impact analysis
+
+DAY 3 (4 hours):
+[ ] Improve model evaluation (ROC/PR curves)
+[ ] Clean up visualizations
+[ ] Rename notebooks with numbering
+
+WEEK 1 GOAL: Clean, presentation-ready notebooks
+WEEK 2 GOAL: Modular Python codebase
+WEEK 3 GOAL: Git + DVC integration
+WEEK 4 GOAL: Polish and documentation
+
+
+================================================================================
+DEFINITION OF DONE
+================================================================================
+
+Project is GitHub-ready when:
+[X] All notebooks run without errors
+[X] No data leakage in production models
+[X] Python scripts are modular and documented
+[X] DVC pipeline reproduces results
+[X] README explains project clearly
+[X] Can clone → install → pull → reproduce in one go
+[X] Someone unfamiliar can understand work in 5 minutes
+
+
+================================================================================
+NOTES & REMINDERS
+================================================================================
+
+- Focus on APPLICATION-TIME prediction (not portfolio monitoring)
+- Keep leakage analysis as APPENDIX only
+- Document all design decisions
+- Prioritize clean code over complex features
+- Make reproduction dead simple
+- Tell a clear story in README
+
+HARDCODED PATHS: OK for now in notebooks, but must fix in Python scripts
+
+LEAKAGE FEATURES TO EXCLUDE: InterestRate, DTIRatio
+
+MODELS TO COMPARE: LogisticRegression, LightGBM, XGBoost
+
+EVALUATION FOCUS: Recall for defaulters (cost asymmetry)
+
+
+================================================================================
+END OF TODO LIST
+================================================================================
