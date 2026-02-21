@@ -8,6 +8,7 @@ import mlflow
 import lightgbm as lgb
 import numpy as np
 import os
+from pathlib import Path
 
 from sklearn.metrics import (
     precision_score,
@@ -81,6 +82,10 @@ def transform(X_train, X_test, y_train, y_test):
 
 
 def train(X_train, X_test, y_train, y_test, preprocessor_tree_port):
+    # Create artifacts directory if it doesn't exist
+    artifacts_dir = Path(__file__).parent / "artifacts"
+    artifacts_dir.mkdir(exist_ok=True)
+
     with mlflow.start_run(run_name="Pipeline_LightGBM_port"):
 
         pipe_lgb = Pipeline(
@@ -134,7 +139,8 @@ def train(X_train, X_test, y_train, y_test, preprocessor_tree_port):
         ks = np.max(tpr - fpr)
         mlflow.log_metric("test_ks", float(ks))
         roc_df = pd.DataFrame({"fpr": fpr, "tpr": tpr, "thresholds": thresholds})
-        roc_df.to_csv("roc_curve_lgb_port.csv", index=False)
+        roc_csv_path = artifacts_dir / "roc_curve_lgb_port.csv"
+        roc_df.to_csv(roc_csv_path, index=False)
         mlflow.log_dict(roc_df.to_dict(), "roc_curve_lgb_port.json")
 
         mlflow.sklearn.log_model(pipe_lgb, artifact_path="model")
@@ -149,7 +155,8 @@ def train(X_train, X_test, y_train, y_test, preprocessor_tree_port):
             }
         ).sort_values("importance", ascending=False)
 
-        fi.to_csv("lgb_feature_importance_port.csv", index=False)
+        fi_csv_path = artifacts_dir / "lgb_feature_importance_port.csv"
+        fi.to_csv(fi_csv_path, index=False)
         mlflow.log_dict(fi.to_dict(), "lgb_feature_importance_port.json")
 
         print("LightGBM Train ROC-AUC:", train_auc)

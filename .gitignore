@@ -58,3 +58,7 @@ tags/
 # Datasets (local only)
 ############################################
 Dataset/
+
+
+# all the csv files are not touched by git
+*.csv
