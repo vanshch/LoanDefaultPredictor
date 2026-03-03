@@ -1,0 +1,17 @@
+============================================================
+LOAN DEFAULT PREDICTION SUMMARY
+============================================================
+Timestamp: 20260226_003724
+Model Run ID: 8e4b7bba06e04364af3b175c5110ecda
+Total Predictions: 51070
+Predicted Defaults: 498 (0.98%)
+Actual Defaults: 5931 (11.61%)
+
+============================================================
+PERFORMANCE METRICS
+============================================================
+ACCURACY            : 0.8852
+PRECISION           : 0.5663
+RECALL              : 0.0475
+F1_SCORE            : 0.0877
+ROC_AUC             : 0.7317
