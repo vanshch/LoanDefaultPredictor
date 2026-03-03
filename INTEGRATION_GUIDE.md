@@ -14,6 +14,7 @@ The Streamlit application (`app/App.py`) has been integrated with the loan defau
 ### Key Components
 
 #### 1. **model_utils.py** (New Utility Module)
+
 Located in `src/model_utils.py`, this module contains reusable functions extracted from `predict.py`:
 
 - `load_model()` - Load trained model from MLflow
@@ -25,6 +26,7 @@ Located in `src/model_utils.py`, this module contains reusable functions extract
 - `evaluate_predictions()` - Calculate performance metrics
 
 #### 2. **app/App.py** (Updated Streamlit App)
+
 The main application now includes:
 
 - **Model Caching**: Uses `@st.cache_resource` to cache model, explainer, and background data
@@ -36,6 +38,7 @@ The main application now includes:
   - **Risk Analysis**: Show SHAP-based feature importance and business decision
 
 #### 3. **src/predict.py** (Updated)
+
 Now imports functions from `model_utils.py` for cleaner code organization.
 
 ## Integration Flow
@@ -94,6 +97,7 @@ seaborn>=0.12.0
 ```
 
 Install with:
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -130,6 +134,7 @@ python src/predict.py
 ```
 
 This will:
+
 - Load test data
 - Make predictions
 - Compute SHAP values
@@ -138,23 +143,27 @@ This will:
 ## Key Features
 
 ### Real-time Model Loading
+
 - Model is cached on first app load
 - SHAP explainer initialized once and reused
 - Background data loaded and cached for efficiency
 
 ### SHAP Explainability
+
 - Shows top 8 features by importance
 - Indicates direction of impact (positive/negative)
 - Displays SHAP values for each feature
 - Top 3 risk factors highlighted
 
 ### Business Decision Logic
+
 - **Configurable Threshold**: Adjust in the UI (default 0.45)
 - **Approval/Rejection**: Automatic based on probability vs threshold
 - **Safety Margin**: Shows distance from threshold
 - **Risk Assessment**: Categorized as Low/Medium/High
 
 ### Input Validation
+
 - Checks for missing columns
 - Validates data types
 - Warns on null values
@@ -221,21 +230,25 @@ def load_cached_explainer(model, X_background):
 ## Troubleshooting
 
 ### Issue: "Model failed to load"
+
 - **Solution**: Check MLflow tracking directory path and experiment name
 - Verify `mlruns/` directory exists with the correct structure
 - Check that "loan_default_experiment" and "Pipeline_LightGBM_port" exist in MLflow
 
 ### Issue: "Error loading background data"
+
 - **Solution**: Ensure `Dataset/Loan_default.csv` exists
 - Check file path is correct relative to working directory
 - Verify CSV format and columns match training data
 
 ### Issue: SHAP computation errors
+
 - **Solution**: May fall back to KernelExplainer (slower but more robust)
 - Ensure background data is properly formatted
 - Check that model and X_test have matching feature columns
 
 ### Issue: Import errors
+
 - **Solution**: Install all dependencies from requirements.txt
 - Ensure `src/` directory is in Python path
 - Check that model_utils.py is in `src/` directory
@@ -262,4 +275,3 @@ def load_cached_explainer(model, X_background):
 - [SHAP Documentation](https://shap.readthedocs.io/)
 - [MLflow Documentation](https://mlflow.org/docs/)
 - [LightGBM Documentation](https://lightgbm.readthedocs.io/)
-
