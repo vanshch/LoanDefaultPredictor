@@ -205,7 +205,7 @@ shap_values, feature_importance_df = compute_shap_values(
     explainer, model, X_test, X_background_transformed
 )
 ```
-
+ 
 ### Caching Strategy
 
 Three resource caching functions ensure efficiency:

@@ -1,10 +1,49 @@
-README.md with project overview	❌ Missing	CRITICAL
-Unit tests (pytest)	❌ Missing	CRITICAL
-Type hints on all functions	⚠️ Partial	High
-Proper logging (not print)	❌ Missing	High
-Input validation with ranges	⚠️ Weak	High
-Configuration management	❌ Missing	Medium
-Requirements.txt lock file	⚠️ Loose	Medium
-Docstrings on all public functions	⚠️ Partial	Medium
-GitHub Actions CI/CD	❌ Missing	Medium
-API endpoints (not just Streamlit)	❌ Missing	Low
+TODO — remaining work for the college project, sorted by priority
+
+CRITICAL
+1. Unit tests with pytest — no test suite exists yet.
+
+HIGH
+2. Add proper logging instead of print statements.
+3. Improve input validation with explicit value ranges and error messages.
+4. Complete type hints on all functions.
+
+MEDIUM
+5. Add configuration management for paths, thresholds, and model settings.
+6. Create a pinned requirements file for reproducible installs.
+7. Add docstrings to all public functions.
+8. Set up GitHub Actions CI/CD for linting, tests, and basic checks.
+
+LOW
+9. Add API endpoints so the project can run beyond the Streamlit app.
+
+
+--- 
+tests for the project 
+Data schema test
+
+1   Check the input CSVs have all required columns
+    Check numeric columns are actually numeric
+    Check no unexpected missing values
+    Validation test
+
+Test validate_input() with:
+valid input
+missing column
+wrong data type
+out-of-range values if you add range checks
+Prediction test
+
+Test predict() returns:
+one prediction per row
+probabilities between 0 and 1
+Evaluation test
+
+Test evaluate_predictions() returns the expected metrics and confusion matrix
+Basic end-to-end test
+
+Load test data
+Validate it
+Run prediction
+Compute metrics
+Confirm the pipeline finishes without crashing

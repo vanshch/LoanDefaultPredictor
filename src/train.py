@@ -20,6 +20,7 @@ from sklearn.metrics import (
     roc_curve,
 )
 
+PATH_CSV = "Dataset/Loan_default.csv"
 
 # helper functions
 def load_data(loc: str) -> pd.DataFrame:
@@ -167,7 +168,6 @@ def train(X_train, X_test, y_train, y_test, preprocessor_tree_port):
 
 # main code block
 def main():
-    PATH_CSV = "Dataset/Loan_default.csv"
     df = load_data(PATH_CSV)
 
     proj_root_path = os.path.abspath(os.path.join(os.getcwd(), ".."))

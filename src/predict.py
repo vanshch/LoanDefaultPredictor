@@ -15,6 +15,8 @@ from model_utils import (
     evaluate_predictions,
 )
 
+x_TEST_PATH = "Dataset/x_test.csv"
+Y_TEST_PATH = "Dataset/y_test.csv"
 
 def save_predictions(
     X_test: pd.DataFrame,
@@ -112,9 +114,7 @@ def main():
 
     # 1. Load test data
     print("Step 1: Loading test data...")
-    X_test_path = "Dataset/x_test.csv"
-    y_test_path = "Dataset/y_test.csv"
-    X_test, y_test = load_test_data(X_test_path, y_test_path)
+    X_test, y_test = load_test_data(x_TEST_PATH, Y_TEST_PATH)
 
     # 2. Validate input data
     print("\nStep 2: Validating input data...")

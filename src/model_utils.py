@@ -4,6 +4,8 @@ import mlflow
 import numpy as np
 import os
 import shap
+
+
 from sklearn.metrics import (
     precision_score,
     recall_score,
@@ -13,6 +15,24 @@ from sklearn.metrics import (
     roc_auc_score,
 )
 
+
+# Expected columns based on train.py
+expected_columns = [
+    "Age",
+    "Income",
+    "LoanAmount",
+    "CreditScore",
+    "MonthsEmployed",
+    "NumCreditLines",
+    "LoanTerm",
+    "Education",
+    "EmploymentType",
+    "MaritalStatus",
+    "HasMortgage",
+    "HasDependents",
+    "LoanPurpose",
+    "HasCoSigner",
+]
 
 def load_test_data(
     x_test_path: str, y_test_path: str
@@ -34,23 +54,6 @@ def load_test_data(
 def validate_input(X_test: pd.DataFrame) -> bool:
     """Validate input data has required columns and correct data types"""
 
-    # Expected columns based on train.py
-    expected_columns = [
-        "Age",
-        "Income",
-        "LoanAmount",
-        "CreditScore",
-        "MonthsEmployed",
-        "NumCreditLines",
-        "LoanTerm",
-        "Education",
-        "EmploymentType",
-        "MaritalStatus",
-        "HasMortgage",
-        "HasDependents",
-        "LoanPurpose",
-        "HasCoSigner",
-    ]
 
     # Check for missing columns
     missing_cols = set(expected_columns) - set(X_test.columns)
